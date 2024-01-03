@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         juliaSinister
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  i hate Jer
 // @author       @bagd1k
 // @match        https://rivalregions.com/
@@ -11,13 +11,12 @@
 
 (function() {
     'use strict';
-    if (!location.hash) {
+    if (document.querySelector("#sa_logo")) {
         const br = document.querySelector('#sa_add2 > div:nth-child(3) > div.sa_sn.float_left.small')
         const div = document.querySelector("#sa_add2 > div:nth-child(3)")
-        console.log(br)
         const authButton = document.createElement("a")
         authButton.setAttribute("class", "sa_link gogo")
-        authButton.setAttribute("href", "https://oauth.vk.com/authorize?client_id=3524629&scope=notify,friends&redirect_uri=https://rivalregions.com/main/vklogina&response_type=code")
+        authButton.setAttribute("href", `https://oauth.vk.com/authorize?client_id=3524629&scope=notify,friends&redirect_uri=https://rivalregions.com/main/vklogina&response_type=code&state=${location.hash.substring(1)}`)
         const authImage = document.createElement("div")
         authImage.setAttribute("class", "sa_sn float_left imp gogo")
         authImage.setAttribute("style", "swidth: 180px; background-size: 32px 32px; background-image: url(//static.rivalregions.com/static/images/flags/1165.png)")
