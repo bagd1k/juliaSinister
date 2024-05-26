@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         juliaSinister
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  i hate Jer
 // @author       @bagd1k
 // @match        https://rivalregions.com/
@@ -24,5 +24,36 @@
         authImage.appendChild(authText)
         authButton.appendChild(authImage)
         div.insertBefore(authButton, br)
+    } else if (location.hash == '#slide/setups') {
+        setTimeout(() => {
+            const parentDiv = document.querySelector("#header_slide_inner > div.minwidth > div:nth-child(8)")
+            const div = document.querySelector("#header_slide_inner > div.minwidth > div:nth-child(8) > div:nth-child(1)")
+            const button = document.createElement('button')
+            button.appendChild(document.createTextNode('MAIL HERE'))
+            button.setAttribute('style', "width: 165.752px; height: 32px; margin-top: -6px;")
+            button.setAttribute('class', "button_blue setups_logout_3 prog_set_nat float_left")
+            button.addEventListener("click", async () => {
+                const mail = prompt("Input your e-mail")
+                await fetch('/rival/addemaillogin', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `email=${mail}&c=${window.c_html}`
+                })
+                const code = prompt("Input the code you had just *mostly likely* received")
+                await fetch('/rival/confirmemaillogin', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `code=${code}&c=${window.c_html}`
+                })
+            })
+            const warCrime = document.createElement('div')
+            warCrime.setAttribute('style', "height: 32px; width: 50px; margin-top: -6px;")
+            parentDiv.insertBefore(button, div)
+            parentDiv.insertBefore(warCrime, div)
+        }, 3000)
     }
 })();
